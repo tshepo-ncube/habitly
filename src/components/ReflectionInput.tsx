@@ -70,7 +70,7 @@ const ReflectionInput: React.FC<ReflectionInputProps> = ({
         <div className="flex items-center space-x-2 mb-3">
           <MessageCircle size={16} className="text-gray-500" />
           <span className="text-sm text-gray-600 font-medium">
-            Daily Reflection
+            AI Habit Coach
           </span>
         </div>
 
@@ -99,7 +99,7 @@ const ReflectionInput: React.FC<ReflectionInputProps> = ({
         <div className="flex items-center space-x-2 mb-3">
           <MessageCircle size={16} className="text-gray-500" />
           <span className="text-sm text-gray-600 font-medium">
-            Daily Reflection
+            AI Habit Coach
           </span>
         </div>
         <VoiceRecorder
@@ -115,7 +115,7 @@ const ReflectionInput: React.FC<ReflectionInputProps> = ({
       <div className="flex items-center space-x-2 mb-3">
         <MessageCircle size={16} className="text-gray-500" />
         <span className="text-sm text-gray-600 font-medium">
-          Daily Reflection
+          AI Habit Coach
         </span>
       </div>
 

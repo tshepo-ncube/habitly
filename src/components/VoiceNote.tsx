@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import { Play, Pause } from 'lucide-react';
+import React, { useState, useRef } from "react";
+import { Play, Pause } from "lucide-react";
 
 interface VoiceNoteProps {
   audioUrl: string;
@@ -9,12 +9,12 @@ interface VoiceNoteProps {
   isProcessing?: boolean;
 }
 
-const VoiceNote: React.FC<VoiceNoteProps> = ({ 
-  audioUrl, 
-  duration, 
-  transcript, 
-  aiResponse, 
-  isProcessing 
+const VoiceNote: React.FC<VoiceNoteProps> = ({
+  audioUrl,
+  duration,
+  transcript,
+  aiResponse,
+  isProcessing,
 }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
@@ -45,7 +45,7 @@ const VoiceNote: React.FC<VoiceNoteProps> = ({
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
+    return `${mins}:${secs.toString().padStart(2, "0")}`;
   };
 
   const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
@@ -65,7 +65,7 @@ const VoiceNote: React.FC<VoiceNoteProps> = ({
           <div className="flex-1">
             <div className="flex items-center space-x-2 mb-1">
               <div className="flex-1 bg-white/50 rounded-full h-1">
-                <div 
+                <div
                   className="bg-blue-600 h-1 rounded-full transition-all duration-100"
                   style={{ width: `${progress}%` }}
                 />
@@ -80,9 +80,9 @@ const VoiceNote: React.FC<VoiceNoteProps> = ({
                   key={i}
                   className="bg-blue-400 rounded-full"
                   style={{
-                    width: '2px',
+                    width: "2px",
                     height: `${Math.random() * 16 + 4}px`,
-                    opacity: i < (progress / 5) ? 1 : 0.3
+                    opacity: i < progress / 5 ? 1 : 0.3,
                   }}
                 />
               ))}
@@ -103,11 +103,22 @@ const VoiceNote: React.FC<VoiceNoteProps> = ({
         <div className="bg-gray-100 p-4 rounded-2xl">
           <div className="flex items-center space-x-2">
             <div className="flex space-x-1">
-              <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-              <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-              <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+              <div
+                className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                style={{ animationDelay: "0ms" }}
+              />
+              <div
+                className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                style={{ animationDelay: "150ms" }}
+              />
+              <div
+                className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                style={{ animationDelay: "300ms" }}
+              />
             </div>
-            <span className="text-sm text-gray-600">AI is analyzing your reflection...</span>
+            <span className="text-sm text-gray-600">
+              AI is analyzing your reflection...
+            </span>
           </div>
         </div>
       )}
@@ -118,7 +129,9 @@ const VoiceNote: React.FC<VoiceNoteProps> = ({
             <div className="w-6 h-6 bg-green-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
               <span className="text-white text-xs font-bold">AI</span>
             </div>
-            <p className="text-gray-700 text-sm leading-relaxed">{aiResponse}</p>
+            <p className="text-gray-700 text-sm leading-relaxed">
+              {aiResponse}
+            </p>
           </div>
         </div>
       )}

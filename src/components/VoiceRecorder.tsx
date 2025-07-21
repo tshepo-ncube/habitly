@@ -1,15 +1,20 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Mic, Square, Play, Pause } from 'lucide-react';
+import React, { useState, useRef, useEffect } from "react";
+import { Mic, Square, Play, Pause } from "lucide-react";
 
 interface VoiceRecorderProps {
   onRecordingComplete: (audioBlob: Blob, duration: number) => void;
   onCancel: () => void;
 }
 
-const VoiceRecorder: React.FC<VoiceRecorderProps> = ({ onRecordingComplete, onCancel }) => {
+const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
+  onRecordingComplete,
+  onCancel,
+}) => {
   const [isRecording, setIsRecording] = useState(false);
   const [duration, setDuration] = useState(0);
-  const [audioLevels, setAudioLevels] = useState<number[]>(new Array(40).fill(0));
+  const [audioLevels, setAudioLevels] = useState<number[]>(
+    new Array(40).fill(0)
+  );
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
   const analyserRef = useRef<AnalyserNode | null>(null);
@@ -28,7 +33,7 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({ onRecordingComplete, onCa
   const startRecording = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      
+
       // Set up audio context for visualization
       audioContextRef.current = new AudioContext();
       const source = audioContextRef.current.createMediaStreamSource(stream);
@@ -45,20 +50,20 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({ onRecordingComplete, onCa
       };
 
       mediaRecorderRef.current.onstop = () => {
-        const audioBlob = new Blob(chunks, { type: 'audio/wav' });
+        const audioBlob = new Blob(chunks, { type: "audio/wav" });
         onRecordingComplete(audioBlob, duration);
-        stream.getTracks().forEach(track => track.stop());
+        stream.getTracks().forEach((track) => track.stop());
       };
 
       mediaRecorderRef.current.start();
       setIsRecording(true);
       startTimeRef.current = Date.now();
-      
+
       // Start visualization and timer
       updateVisualization();
       updateTimer();
     } catch (error) {
-      console.error('Error starting recording:', error);
+      console.error("Error starting recording:", error);
       onCancel();
     }
   };
@@ -100,42 +105,41 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({ onRecordingComplete, onCa
   const formatDuration = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
+    return `${mins}:${secs.toString().padStart(2, "0")}`;
   };
 
   return (
-    <div className="bg-white rounded-2xl p-4 shadow-lg">
-      <div className="flex items-center space-x-4">
+    <div className="w-full max-w-full bg-gray-50 dark:bg-gray-800 rounded-2xl p-4 shadow-lg box-border">
+      <div className="flex items-center space-x-4 overflow-x-auto">
         <button
           onClick={stopRecording}
-          className="bg-red-500 text-white p-3 rounded-full hover:bg-red-600 transition-colors"
+          className="bg-red-500 text-white p-3 rounded-full hover:bg-red-600 transition-colors flex-shrink-0"
         >
           <Square size={20} />
         </button>
-
-        <div className="flex-1">
-          <div className="flex items-center space-x-1 h-8">
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center space-x-1 h-8 overflow-x-auto">
             {audioLevels.map((level, index) => (
               <div
                 key={index}
                 className="bg-red-500 rounded-full transition-all duration-100"
                 style={{
-                  width: '3px',
+                  width: "3px",
                   height: `${Math.max(4, level * 32)}px`,
-                  opacity: level > 0.1 ? 1 : 0.3
+                  opacity: level > 0.1 ? 1 : 0.3,
                 }}
               />
             ))}
           </div>
         </div>
-
-        <div className="text-sm text-gray-600 font-mono">
+        <div className="text-sm text-gray-600 dark:text-gray-200 font-mono flex-shrink-0">
           {formatDuration(duration)}
         </div>
       </div>
-
       <div className="mt-2 text-center">
-        <p className="text-sm text-gray-500">Recording... Tap stop when done</p>
+        <p className="text-sm text-gray-500 dark:text-gray-300">
+          Recording... Tap stop when done
+        </p>
       </div>
     </div>
   );

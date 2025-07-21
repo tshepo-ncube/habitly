@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Plus, LogOut, Crown, LifeBuoy, Target } from "lucide-react";
+import { Plus, LogOut, Crown, LifeBuoy, Target, Sun, Moon } from "lucide-react";
 import { Link } from "react-router-dom";
 import DayNavigation from "./DayNavigation";
 import HabitCard from "./HabitCard";
@@ -7,6 +7,7 @@ import AddHabitModal from "./AddHabitModal";
 import ReflectionInput from "./ReflectionInput";
 import { User } from "../types";
 import { useHabits } from "../hooks/useHabits";
+import { useDarkMode } from "../App";
 
 interface HabitTrackerProps {
   user: User;
@@ -20,6 +21,8 @@ const HabitTracker: React.FC<HabitTrackerProps> = ({ user, onLogout }) => {
   const [showAddModal, setShowAddModal] = useState(false);
   const [editingHabit, setEditingHabit] = useState<any>(null);
   const [processingReflection, setProcessingReflection] = useState(false);
+
+  const { dark, toggle } = useDarkMode();
 
   const {
     habits,
@@ -118,8 +121,8 @@ const HabitTracker: React.FC<HabitTrackerProps> = ({ user, onLogout }) => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50">
-      <div className="max-w-6xl mx-auto bg-white min-h-screen shadow-lg lg:rounded-2xl lg:my-4">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 dark:from-gray-900 dark:to-gray-800">
+      <div className="max-w-6xl mx-auto bg-white dark:bg-gray-900 min-h-screen shadow-lg">
         {/* Header */}
         <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-4 lg:rounded-t-2xl">
           <div className="flex items-center justify-between mb-4">
@@ -148,6 +151,13 @@ const HabitTracker: React.FC<HabitTrackerProps> = ({ user, onLogout }) => {
                   </div>
                 </div>
               </div>
+              <button
+                onClick={toggle}
+                className="p-2 hover:bg-white/20 rounded-full transition-colors"
+                aria-label="Toggle dark mode"
+              >
+                {dark ? <Sun size={18} /> : <Moon size={18} />}
+              </button>
               <Link
                 to="/support"
                 className="p-2 hover:bg-white/20 rounded-full transition-colors"
@@ -174,7 +184,7 @@ const HabitTracker: React.FC<HabitTrackerProps> = ({ user, onLogout }) => {
             {/* Left Column - Habits */}
             <div>
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-semibold text-gray-800">
+                <h2 className="text-xl font-semibold text-gray-800 dark:text-white">
                   Today's Habits
                 </h2>
                 <button
@@ -188,11 +198,13 @@ const HabitTracker: React.FC<HabitTrackerProps> = ({ user, onLogout }) => {
               <div className="space-y-3">
                 {visibleHabits.length === 0 ? (
                   <div className="text-center py-12">
-                    <div className="text-gray-400 mb-2">
+                    <div className="text-gray-400 mb-2 dark:text-gray-300">
                       <Plus size={48} className="mx-auto mb-4 opacity-50" />
                     </div>
-                    <p className="text-gray-500 text-lg">No habits yet</p>
-                    <p className="text-gray-400 text-sm">
+                    <p className="text-gray-500 text-lg dark:text-gray-200">
+                      No habits yet
+                    </p>
+                    <p className="text-gray-400 text-sm dark:text-gray-400">
                       Tap the + button to add your first habit
                     </p>
                   </div>
@@ -216,7 +228,7 @@ const HabitTracker: React.FC<HabitTrackerProps> = ({ user, onLogout }) => {
 
             {/* Right Column - Reflection */}
             <div>
-              <h2 className="text-xl font-semibold text-gray-800 mb-4">
+              <h2 className="text-xl font-semibold text-gray-800 mb-4 dark:text-white">
                 Daily Reflection
               </h2>
               <ReflectionInput

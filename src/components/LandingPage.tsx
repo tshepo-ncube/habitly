@@ -23,16 +23,17 @@ const LandingPage: React.FC<LandingPageProps> = ({
           </div>
           <div className="hidden md:flex items-center space-x-6">
             <a
-              href="#pricing"
-              className="text-gray-600 hover:text-purple-600 transition-colors"
-            >
-              Pricing
-            </a>
-            <a
               href="#features"
               className="text-gray-600 hover:text-purple-600 transition-colors"
             >
               Features
+            </a>
+
+            <a
+              href="#pricing"
+              className="text-gray-600 hover:text-purple-600 transition-colors"
+            >
+              Pricing
             </a>
           </div>
         </div>
@@ -132,88 +133,6 @@ const LandingPage: React.FC<LandingPageProps> = ({
         </div>
       </section>
 
-      {/* Pricing Section */}
-      <section id="pricing" className="py-20">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-800 mb-4">
-              Choose Your Plan
-            </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Start for free and unlock powerful features by upgrading to Pro.
-            </p>
-          </div>
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {/* Free Plan */}
-            <div className="bg-white rounded-2xl shadow-lg p-8 border">
-              <h3 className="text-2xl font-bold text-gray-800 mb-4">Free</h3>
-              <p className="text-gray-600 mb-6">For getting started</p>
-              <p className="text-4xl font-bold text-gray-800 mb-6">
-                $0<span className="text-lg font-medium text-gray-500">/mo</span>
-              </p>
-              <ul className="space-y-4 text-gray-600">
-                <li className="flex items-center">
-                  <Check className="w-5 h-5 text-green-500 mr-2" />
-                  Up to 3 habits
-                </li>
-                <li className="flex items-center">
-                  <Check className="w-5 h-5 text-green-500 mr-2" />
-                  Up to 30s voice notes
-                </li>
-                <li className="flex items-center">
-                  <Check className="w-5 h-5 text-green-500 mr-2" />
-                  Basic streak tracking
-                </li>
-
-                <li className="flex items-center">
-                  <Check className="w-5 h-5 text-green-500 mr-2" />
-                  Premium icons & themes
-                </li>
-              </ul>
-            </div>
-            {/* Pro Plan */}
-            <div className="bg-gradient-to-br from-purple-600 to-blue-600 text-white rounded-2xl shadow-lg p-8 transform scale-105">
-              <h3 className="text-2xl font-bold mb-4">Pro</h3>
-              <p className="opacity-80 mb-6">For building mastery</p>
-              <p className="text-4xl font-bold mb-6">
-                $7<span className="text-lg font-medium opacity-80">/mo</span>
-              </p>
-              <ul className="space-y-4">
-                <li className="flex items-center">
-                  <Check className="w-5 h-5 mr-2" />
-                  12 habits max
-                </li>
-                <li className="flex items-center">
-                  <Check className="w-5 h-5 mr-2" />5 minutes reflection
-                  recording length
-                </li>
-                <li className="flex items-center">
-                  <Check className="w-5 h-5 mr-2" />
-                  Advanced AI Coach
-                </li>
-                <li className="flex items-center">
-                  <Check className="w-5 h-5 mr-2" />
-                  Advanced analytics
-                </li>
-
-                <li className="flex items-center">
-                  <Check className="w-5 h-5 mr-2" />
-                  SMS & email reminders
-                </li>
-                <li className="flex items-center">
-                  <Check className="w-5 h-5 mr-2" />
-                  Export data
-                </li>
-                {/* <li className="flex items-center">
-                  <Check className="w-5 h-5 mr-2" />
-                  Accountability partners
-                </li> */}
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Features Section */}
       <section id="features" className="py-20 bg-white">
         <div className="container mx-auto px-4">
@@ -265,6 +184,86 @@ const LandingPage: React.FC<LandingPageProps> = ({
                 Enjoy a clean, intuitive interface that makes habit tracking
                 delightful.
               </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Section */}
+      <section id="pricing" className="py-20">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-800 mb-4">
+              Choose Your Plan
+            </h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Start for free and unlock powerful features by upgrading to Pro.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {/* Free Plan */}
+            <div className="bg-white rounded-2xl shadow-lg p-8 border">
+              <h3 className="text-2xl font-bold text-gray-800 mb-4">Free</h3>
+              <p className="text-gray-600 mb-6">For getting started</p>
+              <p className="text-4xl font-bold text-gray-800 mb-6">
+                $0<span className="text-lg font-medium text-gray-500">/mo</span>
+              </p>
+              <ul className="space-y-4 text-gray-600">
+                <li className="flex items-center">
+                  <Check className="w-5 h-5 text-green-500 mr-2" />
+                  Up to 3 habits
+                </li>
+                <li className="flex items-center">
+                  <Check className="w-5 h-5 text-green-500 mr-2" />
+                  Up to 30s voice notes
+                </li>
+                <li className="flex items-center">
+                  <Check className="w-5 h-5 text-green-500 mr-2" />
+                  Basic streak tracking
+                </li>
+              </ul>
+            </div>
+            {/* Pro Plan */}
+            <div className="bg-gradient-to-br from-purple-600 to-blue-600 text-white rounded-2xl shadow-lg p-8 transform scale-105">
+              <h3 className="text-2xl font-bold mb-4">Pro</h3>
+              <p className="opacity-80 mb-6">For building mastery</p>
+              <p className="text-4xl font-bold mb-6">
+                $7<span className="text-lg font-medium opacity-80">/mo</span>
+              </p>
+              <ul className="space-y-4">
+                <li className="flex items-center">
+                  <Check className="w-5 h-5 mr-2" />
+                  12 habits max
+                </li>
+                <li className="flex items-center">
+                  <Check className="w-5 h-5 mr-2" />5 minutes reflection
+                  recording length
+                </li>
+                <li className="flex items-center">
+                  <Check className="w-5 h-5 mr-2" />
+                  Advanced AI Coach
+                </li>
+                <li className="flex items-center">
+                  <Check className="w-5 h-5 mr-2" />
+                  Advanced analytics
+                </li>
+                <li className="flex items-center">
+                  <Check className="w-5 h-5 mr-2" />
+                  Premium icons & themes
+                </li>
+                <li className="flex items-center">
+                  <Check className="w-5 h-5 mr-2" />
+                  SMS & email reminders
+                </li>
+                <li className="flex items-center">
+                  <Check className="w-5 h-5 mr-2" />
+                  Export data
+                </li>
+                {/* <li className="flex items-center">
+                  <Check className="w-5 h-5 mr-2" />
+                  Accountability partners
+                </li> */}
+              </ul>
             </div>
           </div>
         </div>

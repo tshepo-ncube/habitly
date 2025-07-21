@@ -164,6 +164,11 @@ const LandingPage: React.FC<LandingPageProps> = ({
                   <Check className="w-5 h-5 text-green-500 mr-2" />
                   Basic streak tracking
                 </li>
+
+                <li className="flex items-center">
+                  <Check className="w-5 h-5 text-green-500 mr-2" />
+                  Premium icons & themes
+                </li>
               </ul>
             </div>
             {/* Pro Plan */}
@@ -190,10 +195,7 @@ const LandingPage: React.FC<LandingPageProps> = ({
                   <Check className="w-5 h-5 mr-2" />
                   Advanced analytics
                 </li>
-                <li className="flex items-center">
-                  <Check className="w-5 h-5 mr-2" />
-                  Premium icons & themes
-                </li>
+
                 <li className="flex items-center">
                   <Check className="w-5 h-5 mr-2" />
                   SMS & email reminders

@@ -185,6 +185,44 @@ const LandingPage: React.FC<LandingPageProps> = ({
                 delightful.
               </p>
             </div>
+
+            <div className="text-center p-6">
+              <div className="bg-gradient-to-r from-blue-100 to-purple-100 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <Zap className="w-8 h-8 text-blue-600" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                AI Powered Habit Coach
+              </h3>
+              <p className="text-gray-600">
+                Get personalized tips, encouragement, and insights from an AI
+                coach to help you stay on track and build better habits.
+              </p>
+            </div>
+
+            <div className="text-center p-6">
+              <div className="bg-gradient-to-r from-yellow-100 to-orange-100 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <svg
+                  className="w-8 h-8 text-yellow-600"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"
+                  />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                SMS Reminders
+              </h3>
+              <p className="text-gray-600">
+                Get timely SMS reminders to help you stay accountable and never
+                miss a habit.
+              </p>
+            </div>
           </div>
         </div>
       </section>

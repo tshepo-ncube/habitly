@@ -75,37 +75,37 @@ const SupportPage: React.FC<SupportPageProps> = ({ user }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center p-4">
-      <div className="max-w-2xl w-full bg-white rounded-2xl shadow-lg p-8 relative">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center p-4">
+      <div className="max-w-2xl w-full bg-white dark:bg-gray-900 rounded-2xl shadow-lg p-8 relative">
         {!showSuccessMessage && (
           <Link
             to="/"
-            className="absolute top-4 left-4 p-2 rounded-full hover:bg-gray-100 transition-colors"
+            className="absolute top-4 left-4 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
           >
-            <ArrowLeft size={20} className="text-gray-600" />
+            <ArrowLeft size={20} className="text-gray-600 dark:text-gray-200" />
           </Link>
         )}
 
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-800">
+          <h1 className="text-3xl font-bold text-gray-800 dark:text-white">
             Support, Feedback & Feature Request
           </h1>
-          <p className="text-gray-500 mt-2">
+          <p className="text-gray-500 mt-2 dark:text-gray-300">
             Submit a ticket, rate the app, or upload a screenshot/image.
           </p>
         </div>
 
         {showSuccessMessage ? (
-          <div className="text-center p-6 bg-green-100/50 border border-green-200 rounded-xl">
-            <h2 className="text-xl font-semibold text-green-800">
+          <div className="text-center p-6 bg-green-100/50 dark:bg-green-900/50 border border-green-200 dark:border-green-700 rounded-xl">
+            <h2 className="text-xl font-semibold text-green-800 dark:text-green-200">
               Thank you for your feedback!
             </h2>
-            <p className="text-green-700 mt-1">
+            <p className="text-green-700 mt-1 dark:text-green-300">
               Your ticket has been submitted. 💜
             </p>
             <button
               onClick={handleBackToHome}
-              className="mt-4 text-purple-600 font-semibold hover:underline"
+              className="mt-4 text-purple-600 dark:text-purple-400 font-semibold hover:underline"
             >
               Back to home
             </button>
@@ -115,7 +115,7 @@ const SupportPage: React.FC<SupportPageProps> = ({ user }) => {
             <div>
               <label
                 htmlFor="title"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1"
               >
                 Title <span className="text-red-500">*</span>
               </label>
@@ -124,7 +124,7 @@ const SupportPage: React.FC<SupportPageProps> = ({ user }) => {
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                className="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                 placeholder="e.g., 'Bug in Progress tab'"
                 required
               />
@@ -133,7 +133,7 @@ const SupportPage: React.FC<SupportPageProps> = ({ user }) => {
             <div>
               <label
                 htmlFor="description"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1"
               >
                 Description <span className="text-red-500">*</span>
               </label>
@@ -142,18 +142,18 @@ const SupportPage: React.FC<SupportPageProps> = ({ user }) => {
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 rows={4}
-                className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                className="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                 placeholder="Describe your issue, feedback, or suggestion in detail..."
                 required
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
                 Screenshot/Image (optional)
               </label>
               <div
-                className="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center cursor-pointer hover:border-purple-500 transition-colors"
+                className="border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-xl p-6 text-center cursor-pointer hover:border-purple-500 dark:hover:border-purple-400 transition-colors"
                 onDragOver={(e) => e.preventDefault()}
                 onDrop={handleImageDrop}
                 onClick={() => document.getElementById("imageUpload")?.click()}
@@ -166,16 +166,18 @@ const SupportPage: React.FC<SupportPageProps> = ({ user }) => {
                   accept="image/*"
                 />
                 {image ? (
-                  <p className="text-green-600">{image.name}</p>
+                  <p className="text-green-600 dark:text-green-400">
+                    {image.name}
+                  </p>
                 ) : (
-                  <div className="text-gray-500">
+                  <div className="text-gray-500 dark:text-gray-300">
                     <ImageIcon
                       size={40}
-                      className="mx-auto mb-2 text-gray-400"
+                      className="mx-auto mb-2 text-gray-400 dark:text-gray-500"
                     />
                     <p>
                       Drag & drop an image here, or{" "}
-                      <span className="text-purple-600 font-semibold">
+                      <span className="text-purple-600 dark:text-purple-400 font-semibold">
                         click to select
                       </span>
                     </p>
@@ -185,7 +187,7 @@ const SupportPage: React.FC<SupportPageProps> = ({ user }) => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
                 Rate the us <span className="text-red-500">*</span>
               </label>
               <div className="flex items-center space-x-1">
@@ -196,7 +198,7 @@ const SupportPage: React.FC<SupportPageProps> = ({ user }) => {
                     className={`cursor-pointer transition-colors ${
                       rating >= star
                         ? "text-yellow-400"
-                        : "text-gray-300 hover:text-yellow-300"
+                        : "text-gray-300 dark:text-gray-600 hover:text-yellow-300"
                     }`}
                     onClick={() => setRating(star)}
                     onMouseOver={(e) =>

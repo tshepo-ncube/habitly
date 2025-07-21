@@ -11,6 +11,7 @@ import {
   Timestamp,
   runTransaction,
   getDocs,
+  updateDoc,
 } from "firebase/firestore";
 import { db } from "../firebase";
 import { Habit, HabitCompletion, DailyReflection } from "../types";
@@ -36,6 +37,7 @@ export const useHabits = (userId: string | null) => {
     const habitsQuery = query(
       collection(db, "habits"),
       where("userId", "==", userId),
+      where("deleted", "==", false),
       orderBy("createdAt", "desc")
     );
 
@@ -87,7 +89,12 @@ export const useHabits = (userId: string | null) => {
   const addHabit = async (
     habit: Omit<
       Habit,
-      "id" | "userId" | "createdAt" | "currentStreak" | "lastCompletedDate"
+      | "id"
+      | "userId"
+      | "createdAt"
+      | "currentStreak"
+      | "lastCompletedDate"
+      | "deleted"
     >
   ) => {
     if (!userId) return;
@@ -98,7 +105,18 @@ export const useHabits = (userId: string | null) => {
       createdAt: Timestamp.fromDate(new Date()),
       currentStreak: 0,
       lastCompletedDate: "",
+      deleted: false,
     });
+  };
+
+  const updateHabit = async (habitId: string, habitData: Partial<Habit>) => {
+    const habitRef = doc(db, "habits", habitId);
+    await updateDoc(habitRef, habitData);
+  };
+
+  const softDeleteHabit = async (habitId: string) => {
+    const habitRef = doc(db, "habits", habitId);
+    await updateDoc(habitRef, { deleted: true });
   };
 
   const toggleHabitCompletion = async (habitId: string, date: string) => {
@@ -193,6 +211,8 @@ export const useHabits = (userId: string | null) => {
     reflections,
     loading,
     addHabit,
+    updateHabit,
+    softDeleteHabit,
     toggleHabitCompletion,
     addReflection,
   };

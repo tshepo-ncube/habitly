@@ -1,10 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { X, Coffee, Book, Dumbbell, Heart, Zap, Target } from "lucide-react";
 import { Habit } from "../types";
 
 interface AddHabitModalProps {
   onClose: () => void;
-  onAdd: (habit: Omit<Habit, "id" | "userId" | "createdAt">) => void;
+  onAdd?: (
+    habit: Omit<
+      Habit,
+      | "id"
+      | "userId"
+      | "createdAt"
+      | "currentStreak"
+      | "lastCompletedDate"
+      | "deleted"
+    >
+  ) => void;
+  onUpdate?: (habitId: string, habitData: Partial<Habit>) => void;
+  editingHabit?: Habit | null;
 }
 
 const icons = [
@@ -25,7 +37,12 @@ const colors = [
   { id: "blue", class: "from-blue-400 to-cyan-400", label: "Blue" },
 ];
 
-const AddHabitModal: React.FC<AddHabitModalProps> = ({ onClose, onAdd }) => {
+const AddHabitModal: React.FC<AddHabitModalProps> = ({
+  onClose,
+  onAdd,
+  onUpdate,
+  editingHabit,
+}) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [time, setTime] = useState("");
@@ -36,6 +53,20 @@ const AddHabitModal: React.FC<AddHabitModalProps> = ({ onClose, onAdd }) => {
   const [selectedColor, setSelectedColor] = useState("blue");
   const [selectedIcon, setSelectedIcon] = useState("target");
 
+  const isEditing = !!editingHabit;
+
+  useEffect(() => {
+    if (isEditing) {
+      setTitle(editingHabit.title);
+      setDescription(editingHabit.description);
+      setTime(editingHabit.time);
+      setFrequency(editingHabit.frequency);
+      setCustomDays(editingHabit.customDays || []);
+      setSelectedColor(editingHabit.color);
+      setSelectedIcon(editingHabit.icon);
+    }
+  }, [editingHabit, isEditing]);
+
   const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -43,7 +74,7 @@ const AddHabitModal: React.FC<AddHabitModalProps> = ({ onClose, onAdd }) => {
     if (!title.trim() || !description.trim() || !time.trim()) return;
     if (frequency === "custom" && customDays.length === 0) return;
 
-    onAdd({
+    const habitData = {
       title: title.trim(),
       description: description.trim(),
       time: time.trim(),
@@ -51,7 +82,14 @@ const AddHabitModal: React.FC<AddHabitModalProps> = ({ onClose, onAdd }) => {
       customDays: frequency === "custom" ? customDays : [],
       color: selectedColor,
       icon: selectedIcon,
-    });
+    };
+
+    if (isEditing && onUpdate && editingHabit) {
+      onUpdate(editingHabit.id, habitData);
+    } else if (onAdd) {
+      onAdd(habitData);
+    }
+
     onClose();
   };
 
@@ -64,11 +102,13 @@ const AddHabitModal: React.FC<AddHabitModalProps> = ({ onClose, onAdd }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+    <div className="fixed inset-0 bg-black/50 flex w-full items-center justify-center p-4 z-50">
       <div className="bg-white rounded-2xl max-w-sm w-full max-h-[90vh] overflow-y-auto">
         <div className="p-6">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-bold text-gray-800">Add New Habit</h2>
+            <h2 className="text-xl font-bold text-gray-800">
+              {isEditing ? "Edit Habit" : "Add New Habit"}
+            </h2>
             <button
               onClick={onClose}
               className="p-1 hover:bg-gray-100 rounded-full transition-colors"
@@ -248,7 +288,7 @@ const AddHabitModal: React.FC<AddHabitModalProps> = ({ onClose, onAdd }) => {
                 type="submit"
                 className="flex-1 py-3 px-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-xl hover:from-purple-700 hover:to-blue-700 transition-all"
               >
-                Add Habit
+                {isEditing ? "Save Changes" : "Add Habit"}
               </button>
             </div>
           </form>

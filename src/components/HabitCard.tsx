@@ -7,6 +7,8 @@ import {
   Heart,
   Zap,
   Target,
+  Pencil,
+  Trash2,
 } from "lucide-react";
 import { Habit } from "../types";
 
@@ -14,6 +16,8 @@ interface HabitCardProps {
   habit: Habit;
   isCompleted: boolean;
   onToggle: () => void;
+  onEdit: () => void;
+  onDelete: () => void;
   disabled?: boolean;
 }
 
@@ -39,6 +43,8 @@ const HabitCard: React.FC<HabitCardProps> = ({
   habit,
   isCompleted,
   onToggle,
+  onEdit,
+  onDelete,
   disabled = false,
 }) => {
   const IconComponent = iconMap[habit.icon as keyof typeof iconMap] || Target;
@@ -49,11 +55,38 @@ const HabitCard: React.FC<HabitCardProps> = ({
 
   return (
     <div
-      className={`bg-gradient-to-r ${gradientClass} p-4 rounded-2xl shadow-md hover:shadow-lg transition-all duration-200 cursor-pointer transform hover:scale-[1.02] ${
+      className={`group relative bg-gradient-to-r ${gradientClass} p-4 rounded-2xl shadow-md hover:shadow-lg transition-all duration-200 cursor-pointer transform hover:scale-[1.02] ${
         disabled ? "opacity-60 cursor-not-allowed" : ""
       } ${isCompleted ? "ring-2 ring-white ring-offset-2" : ""}`}
-      onClick={!disabled ? onToggle : undefined}
+      onClick={(e) => {
+        if (disabled) return;
+        // Ensure clicking on buttons doesn't also toggle completion
+        const target = e.target as HTMLElement;
+        if (target.closest(".habit-actions")) return;
+        onToggle();
+      }}
     >
+      <div className="absolute top-2 right-2 flex items-center space-x-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 habit-actions">
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onEdit();
+          }}
+          className="p-1.5 bg-white/20 rounded-full hover:bg-white/40"
+        >
+          <Pencil size={14} className="text-white" />
+        </button>
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onDelete();
+          }}
+          className="p-1.5 bg-white/20 rounded-full hover:bg-white/40"
+        >
+          <Trash2 size={14} className="text-white" />
+        </button>
+      </div>
+
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-3 flex-1">
           <div className="bg-white/20 p-2 rounded-xl">

@@ -1,46 +1,59 @@
-import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
-import LandingPage from './components/LandingPage';
-import HabitTracker from './components/HabitTracker';
-import { useAuth } from './hooks/useAuth';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import { useAuth } from "./hooks/useAuth";
+import { auth } from "./firebase";
+import LandingPage from "./components/LandingPage";
+import HabitTracker from "./components/HabitTracker";
+import SupportPage from "./components/SupportPage";
 
 function App() {
-  const { user, loading, loginWithGoogle, loginWithMicrosoft, logout } = useAuth();
+  const { user, loading, loginWithGoogle, loginWithMicrosoft, logout } =
+    useAuth();
 
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
+        <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-purple-600"></div>
       </div>
     );
   }
 
   return (
-    <Routes>
-      <Route 
-        path="/" 
-        element={
-          user ? (
-            <Navigate to="/app" replace />
-          ) : (
-            <LandingPage 
-              onGoogleLogin={loginWithGoogle}
-              onMicrosoftLogin={loginWithMicrosoft}
-            />
-          )
-        } 
-      />
-      <Route 
-        path="/app" 
-        element={
-          user ? (
-            <HabitTracker user={user} onLogout={logout} />
-          ) : (
-            <Navigate to="/" replace />
-          )
-        } 
-      />
-    </Routes>
+    <Router>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            !user ? (
+              <LandingPage
+                onGoogleLogin={loginWithGoogle}
+                onMicrosoftLogin={loginWithMicrosoft}
+              />
+            ) : (
+              <Navigate to="/app" />
+            )
+          }
+        />
+        <Route
+          path="/app"
+          element={
+            user ? (
+              <HabitTracker user={user} onLogout={logout} />
+            ) : (
+              <Navigate to="/" />
+            )
+          }
+        />
+        <Route
+          path="/support"
+          element={user ? <SupportPage user={user} /> : <Navigate to="/" />}
+        />
+      </Routes>
+    </Router>
   );
 }
 

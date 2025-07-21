@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Plus, LogOut, Crown } from "lucide-react";
+import { Plus, LogOut, Crown, LifeBuoy, Target } from "lucide-react";
+import { Link } from "react-router-dom";
 import DayNavigation from "./DayNavigation";
 import HabitCard from "./HabitCard";
 import AddHabitModal from "./AddHabitModal";
@@ -17,6 +18,7 @@ const HabitTracker: React.FC<HabitTrackerProps> = ({ user, onLogout }) => {
     new Date().toISOString().split("T")[0]
   );
   const [showAddModal, setShowAddModal] = useState(false);
+  const [editingHabit, setEditingHabit] = useState<any>(null);
   const [processingReflection, setProcessingReflection] = useState(false);
 
   const {
@@ -25,6 +27,8 @@ const HabitTracker: React.FC<HabitTrackerProps> = ({ user, onLogout }) => {
     reflections,
     loading,
     addHabit,
+    updateHabit,
+    softDeleteHabit,
     toggleHabitCompletion,
     addReflection,
   } = useHabits(user.id);
@@ -48,6 +52,22 @@ const HabitTracker: React.FC<HabitTrackerProps> = ({ user, onLogout }) => {
       default:
         return true;
     }
+  };
+
+  const handleEditHabit = (habit: any) => {
+    setEditingHabit(habit);
+    setShowAddModal(true);
+  };
+
+  const handleDeleteHabit = (habitId: string) => {
+    if (window.confirm("Are you sure you want to delete this habit?")) {
+      softDeleteHabit(habitId);
+    }
+  };
+
+  const handleCloseModal = () => {
+    setShowAddModal(false);
+    setEditingHabit(null);
   };
 
   const handleReflectionSubmit = async (reflection: {
@@ -103,7 +123,12 @@ const HabitTracker: React.FC<HabitTrackerProps> = ({ user, onLogout }) => {
         {/* Header */}
         <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-4 lg:rounded-t-2xl">
           <div className="flex items-center justify-between mb-4">
-            <h1 className="text-2xl font-bold">Habitly</h1>
+            <div className="flex items-center space-x-2">
+              <div className="bg-white/20 p-2 rounded-lg">
+                <Target className="w-5 h-5 text-white" />
+              </div>
+              <h1 className="text-2xl font-bold">Habitly</h1>
+            </div>
             <div className="flex items-center space-x-3">
               <div className="flex items-center space-x-2">
                 <img
@@ -123,6 +148,12 @@ const HabitTracker: React.FC<HabitTrackerProps> = ({ user, onLogout }) => {
                   </div>
                 </div>
               </div>
+              <Link
+                to="/support"
+                className="p-2 hover:bg-white/20 rounded-full transition-colors"
+              >
+                <LifeBuoy size={18} />
+              </Link>
               <button
                 onClick={onLogout}
                 className="p-2 hover:bg-white/20 rounded-full transition-colors"
@@ -174,6 +205,8 @@ const HabitTracker: React.FC<HabitTrackerProps> = ({ user, onLogout }) => {
                       onToggle={() =>
                         toggleHabitCompletion(habit.id, selectedDate)
                       }
+                      onEdit={() => handleEditHabit(habit)}
+                      onDelete={() => handleDeleteHabit(habit.id)}
                       disabled={!isToday}
                     />
                   ))
@@ -208,11 +241,13 @@ const HabitTracker: React.FC<HabitTrackerProps> = ({ user, onLogout }) => {
           </div>
         </div>
 
-        {/* Add Habit Modal */}
+        {/* Add/Edit Habit Modal */}
         {showAddModal && (
           <AddHabitModal
-            onClose={() => setShowAddModal(false)}
+            onClose={handleCloseModal}
             onAdd={addHabit}
+            onUpdate={updateHabit}
+            editingHabit={editingHabit}
           />
         )}
       </div>

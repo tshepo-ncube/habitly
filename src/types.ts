@@ -11,6 +11,7 @@ export interface Habit {
   createdAt: any; // Can be a server timestamp
   currentStreak: number;
   lastCompletedDate: string;
+  deleted: boolean;
 }
 
 export interface HabitCompletion {
